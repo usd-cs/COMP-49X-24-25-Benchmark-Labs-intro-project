@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classifier</title>
+    <style>
+        body {
+            font-family: Inter, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .image-classifier-container {
+            background-color: #fff;
+            display: flex;
+            max-width: 800px;
+            width: 100%;
+            flex-direction: column;
+            overflow: hidden;
+            color: #fff;
+            font-weight: 400;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+        }
+        .classifier-header {
+            background-color: #000;
+            width: 100%;
+            font-size: 48px;
+            text-align: center;
+            padding: 60px 0;
+            border-radius: 30px 30px 0 0;
+        }
+        .classifier-description {
+            color: #000;
+            font-size: 20px;
+            line-height: 1.5;
+            letter-spacing: -0.23px;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .upload-button {
+            border-radius: 20px;
+            background-color: #000;
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+            max-width: 100%;
+            font-size: 18px;
+            letter-spacing: -0.23px;
+            line-height: 1;
+            padding: 15px 20px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .upload-button:hover {
+            background-color: #333;
+        }
+        .upload-button:focus {
+            outline: 2px solid #007bff;
+            outline-offset: 2px;
+        }
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            margin: 40px auto;
+            display: block;
+            border-radius: 10px;
+        }
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <main class="image-classifier-container">
+        <header class="classifier-header" role="banner">
+            <h1>Image Classifier</h1>
+        </header>
+        <p class="classifier-description">
+            This application allows you to upload an image of a handwritten numerical digit and tells you which number it is!
+        </p>
+        <form id="uploadForm">
+            <label for="imageUpload" class="visually-hidden">Upload Image</label>
+            <button type="button" class="upload-button" onclick="document.getElementById('imageUpload').click()">
+                Upload Image Here
+            </button>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;" aria-label="Upload Image">
+        </form>
+        <div id="results" style="display: none; text-align: center; padding: 20px; color: #000;">
+            <p>Predicted Digit: <span id="predictedDigit"></span></p>
+            <p>Confidence: <span id="confidence"></span>%</p>
+            <p>Time Taken: <span id="timeTaken"></span>ms</p>
+        </div>
+        <img src="" alt="Uploaded image" class="result-image" style="display: none;" />
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/159d552231a1e6c7c76a046aa2e457271fa11223211fcb11fa0aeaacb62b7407?placeholderIfAbsent=true&apiKey=d0e7bad1dba14c1a91c81724c35335b6" alt="Classified image result" class="result-image" />
+    </main>
+    <script>
+        // When image is uploaded, send to prediction route
+        document.getElementById('imageUpload').addEventListener('change', async function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.result-image').src = e.target.result;
+                    document.querySelector('.result-image').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+
+                // Start recording processing time
+                const startTime = performance.now();
+
+                // Add uploaded image to form data
+                const formData = new FormData();
+                formData.append('image', file);
+
+                try {
+                    // Send image to prediction route
+                    const response = await fetch('http://127.0.0.1:5000/predict', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    // Wait for prediction response
+                    const data = await response.json();
+
+                    // Stop recording processing time
+                    const timeTaken = Math.round(performance.now() - startTime);
+
+                    // Display results on home page
+                    document.getElementById('results').style.display = 'block';
+                    document.getElementById('predictedDigit').textContent = data.digit;
+                    document.getElementById('confidence').textContent = (data.confidence * 100).toFixed(2);
+                    document.getElementById('timeTaken').textContent = timeTaken;
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error processing image');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

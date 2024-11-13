@@ -7,13 +7,17 @@ from flask_cors import CORS
 import time
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
+import os
 
 # Launch Flask app
 app = Flask(__name__, template_folder='../frontend')
 CORS(app)  # Enable CORS for all routes
 
-# Load the model at startup
-model = load_model('./final_model.h5')
+# Get the directory where app.py is located
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Load the model from absolute path
+model = load_model(os.path.join(current_dir, 'final_model.h5'))
 
 # Function to process image for model prediction
 def process_image(image_data):

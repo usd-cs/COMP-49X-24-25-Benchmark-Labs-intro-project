@@ -2,7 +2,7 @@
 # $ conda create --name <env> --file <this file>
 # platform: osx-64
 # created-by: conda 24.9.2
-_tflow_select=2.2.0=eigen
+tflow_select=2.2.0=eigen
 abseil-cpp=20211102.0=he9d5cce_0
 absl-py=2.1.0=py39hecd8cb5_0
 aiohappyeyeballs=2.4.0=py39hecd8cb5_0

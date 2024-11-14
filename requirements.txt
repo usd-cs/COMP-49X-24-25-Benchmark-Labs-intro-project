@@ -54,7 +54,7 @@ intel-openmp==2021.4.0
 itsdangerous==2.2.0
 jinja2==3.1.4
 joblib==1.4.2
-jpeg==9e
+jpeg
 keras==2.12.0
 keras-preprocessing==1.1.2
 kiwisolver==1.4.4
@@ -99,7 +99,7 @@ numpy==1.22.3
 numpy-base==1.22.3
 oauthlib==3.2.2
 openjpeg==2.5.2
-openssl==1.1.1w
+openssl==1.1.1
 opt_einsum==3.3.0
 packaging==24.1
 pillow==10.4.0
@@ -115,7 +115,7 @@ pyparsing==3.0.9
 pysocks==1.7.1
 pytest==7.4.4
 python==3.9.18
-python-dateutil==2.9.0post0
+python-dateutil==2.9.0
 python-flatbuffers==24.3.25
 re2==2022.04.01
 readline==8.2

@@ -9,6 +9,10 @@ from keras.optimizers import SGD  # Updated import
 import numpy as np
 import os
 
+"""
+This file trains on the config.npz file made from the main.py file
+"""
+
 # load train and test dataset
 def load_dataset():
 	# load dataset

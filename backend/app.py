@@ -3,7 +3,6 @@ from PIL import Image
 import numpy as np
 from tensorflow.keras.models import load_model
 from io import BytesIO
-from flask_cors import CORS
 import time
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
@@ -11,7 +10,6 @@ import os
 
 # Launch Flask app
 app = Flask(__name__, template_folder='../frontend')
-CORS(app)  # Enable CORS for all routes
 
 # Get the directory where app.py is located
 current_dir = os.path.dirname(os.path.abspath(__file__))

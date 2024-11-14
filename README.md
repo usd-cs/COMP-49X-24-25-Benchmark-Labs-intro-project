@@ -17,4 +17,4 @@ In backend directory run app.py to start website, then go to http://127.0.0.1:50
 
 To train on alternate datasets, use the config_helper directory.
 Run main.py to create a subset of the MNIST dataset. Then use config_trainer.py to train on that dataset.
-Next, you can import that file (final_model.h5) into the backend directory by dragging and dropping and this new model will be used instead.
+Next, you can import that file (final_model.h5) into the backend directory by dragging and dropping (delete old model) and this new model will be used instead.

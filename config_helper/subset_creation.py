@@ -28,15 +28,7 @@ def receive_subset_info():
             pass
         print("Invalid input try again:")
     
-    print("Now enter a name for the file to be saved:")
-    while True: 
-        try:
-            name = str(input())
-            break
-        except:
-            pass
-        print("Invalid input try again:")
     
     trainX_subset, trainY_subset, testX_subset, testY_subset = create_subset(n)
-    save_file(trainX_subset, trainY_subset, testX_subset, testY_subset, name)
+    save_file(trainX_subset, trainY_subset, testX_subset, testY_subset, "config")
 
